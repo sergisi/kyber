@@ -1,3 +1,5 @@
+use core::ops::{Add, AddAssign, Mul, MulAssign};
+
 use crate::{cbd::*, ntt::*, params::*, reduce::*, symmetric::*};
 
 #[derive(Clone)]
@@ -157,6 +159,7 @@ pub fn poly_frombytes(r: &mut Poly, a: &[u8]) {
 ///  - [u8]  nonce:   one-byte input nonce
 pub fn poly_getnoise_eta1(r: &mut Poly, seed: &[u8], nonce: u8) {
     const LENGTH: usize = KYBER_ETA1 * KYBER_N / 4;
+
     let mut buf = [0u8; LENGTH];
     prf(&mut buf, LENGTH, seed, nonce);
     poly_cbd_eta1(r, &buf);
@@ -310,5 +313,38 @@ pub fn poly_tomsg(msg: &mut [u8], a: Poly) {
             t = (((t << 1) + KYBER_Q as i16 / 2) / KYBER_Q as i16) & 1;
             msg[i] |= (t << j) as u8;
         }
+    }
+}
+
+impl Add for Poly {
+    type Output = Self;
+
+    fn add(self, other: Self) -> Self {
+        let mut r = self.clone();
+        poly_add(&mut r, &other);
+        r
+    }
+}
+
+impl AddAssign for Poly {
+    fn add_assign(&mut self, rhs: Self) {
+        poly_add(self, &rhs)
+    }
+}
+
+impl Mul for Poly {
+    type Output = Poly;
+
+    fn mul(self, rhs: Self) -> Self::Output {
+        let mut r = Poly::new();
+        poly_basemul(&mut r, &self, &rhs);
+        return r;
+    }
+}
+
+impl MulAssign for Poly {
+    fn mul_assign(&mut self, rhs: Self) {
+        let a = self.clone();
+        poly_basemul(self, &a, &rhs);
     }
 }

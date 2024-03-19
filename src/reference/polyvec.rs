@@ -1,4 +1,6 @@
 #![allow(clippy::precedence)]
+use core::ops::{Add, AddAssign, Mul};
+
 use crate::{params::*, poly::*};
 
 #[derive(Clone)]
@@ -215,5 +217,31 @@ pub fn polyvec_reduce(r: &mut Polyvec) {
 pub fn polyvec_add(r: &mut Polyvec, b: &Polyvec) {
     for i in 0..KYBER_K {
         poly_add(&mut r.vec[i], &b.vec[i]);
+    }
+}
+
+impl AddAssign for Polyvec {
+    fn add_assign(&mut self, rhs: Self) {
+        polyvec_add(self, &rhs)
+    }
+}
+
+impl Add for Polyvec {
+    type Output = Polyvec;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        let mut r = self.clone();
+        polyvec_add(&mut r, &rhs);
+        return r;
+    }
+}
+
+impl Mul for Polyvec {
+    type Output = Poly;
+
+    fn mul(self, rhs: Self) -> Self::Output {
+        let mut res = Poly::new();
+        polyvec_basemul_acc_montgomery(&mut res, &self, &rhs);
+        return res;
     }
 }
