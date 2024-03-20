@@ -132,9 +132,9 @@ mod avx2;
 use avx2::*;
 
 #[cfg(any(not(target_arch = "x86_64"), not(feature = "avx2")))]
-mod reference;
+pub mod reference;
 #[cfg(any(not(target_arch = "x86_64"), not(feature = "avx2")))]
-use reference::*;
+pub use reference::*;
 
 #[cfg(any(not(target_arch = "x86_64"), not(feature = "avx2")))]
 #[cfg(feature = "hazmat")]
