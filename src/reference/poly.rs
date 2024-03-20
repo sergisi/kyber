@@ -2,7 +2,7 @@ use core::ops::{Add, AddAssign, Mul, MulAssign};
 
 use crate::{cbd::*, ntt::*, params::*, reduce::*, symmetric::*};
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Poly {
     pub coeffs: [i16; KYBER_N],
 }
