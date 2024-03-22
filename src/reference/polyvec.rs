@@ -245,3 +245,31 @@ impl Mul for Polyvec {
         return res;
     }
 }
+
+#[derive(Clone)]
+pub struct Polymat {
+    pub vec: [Polyvec; KYBER_K],
+}
+
+impl Copy for Polymat {}
+
+impl Polymat {
+    pub fn new() -> Self {
+        Polymat {
+            vec: [Polyvec::new(); KYBER_K],
+        }
+    }
+}
+
+impl Mul<Polyvec> for Polymat {
+    type Output = Polyvec;
+
+    fn mul(self, rhs: Polyvec) -> Self::Output {
+        let mut res = Polyvec::new();
+        for i in 0..KYBER_K {
+            polyvec_basemul_acc_montgomery(&mut res.vec[i], &self.vec[i], &rhs);
+            poly_tomont(&mut res.vec[i]);
+        }
+        return res;
+    }
+}
