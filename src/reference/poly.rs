@@ -1,4 +1,4 @@
-use core::ops::{Add, AddAssign, Mul, MulAssign};
+use core::ops::{Add, AddAssign, Mul, MulAssign, Sub};
 
 use crate::{cbd::*, ntt::*, params::*, reduce::*, symmetric::*};
 
@@ -322,6 +322,16 @@ impl Add for Poly {
     fn add(self, other: Self) -> Self {
         let mut r = self.clone();
         poly_add(&mut r, &other);
+        r
+    }
+}
+
+impl Sub for Poly {
+    type Output = Self;
+
+    fn sub(self, rhs: Self) -> Self::Output {
+        let mut r = self.clone();
+        poly_sub(&mut r, &rhs);
         r
     }
 }
