@@ -109,11 +109,11 @@ fn rej_uniform(r: &mut [i16], len: usize, buf: &[u8], buflen: usize) -> usize {
     ctr
 }
 
-fn gen_a(a: &mut [Polyvec], b: &[u8]) {
+pub fn gen_a(a: &mut [Polyvec], b: &[u8]) {
     gen_matrix(a, b, false);
 }
 
-fn gen_at(a: &mut [Polyvec], b: &[u8]) {
+pub fn gen_at(a: &mut [Polyvec], b: &[u8]) {
     gen_matrix(a, b, true);
 }
 
