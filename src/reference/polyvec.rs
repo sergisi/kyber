@@ -3,7 +3,7 @@ use core::ops::{Add, AddAssign, Mul};
 
 use crate::{params::*, poly::*};
 
-#[derive(Clone)]
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Polyvec {
     pub vec: [Poly; KYBER_K],
 }
@@ -246,7 +246,7 @@ impl Mul for Polyvec {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Polymat {
     pub vec: [Polyvec; KYBER_K],
 }
