@@ -143,13 +143,13 @@ pub use reference::indcpa;
 #[cfg(feature = "wasm")]
 mod wasm;
 
-mod api;
-mod error;
-mod kem;
-mod kex;
-mod params;
-mod rng;
-mod symmetric;
+pub mod api;
+pub mod error;
+pub mod kem;
+pub mod kex;
+pub mod params;
+pub mod rng;
+pub mod symmetric;
 
 pub use api::*;
 pub use error::KyberError;
