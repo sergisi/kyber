@@ -46,13 +46,13 @@ impl GenState {
         return s;
     }
 
-    pub fn gen_matrix_a(self: Self) -> Polymat {
+    pub fn gen_matrix_a(self: &Self) -> Polymat {
         let mut a = [Polyvec::new(); KYBER_K];
         gen_a(&mut a, &self.publicseed);
         Polymat { vec: a }
     }
 
-    pub fn gen_matrix_at(self: Self) -> Polymat {
+    pub fn gen_matrix_at(self: &Self) -> Polymat {
         let mut a = [Polyvec::new(); KYBER_K];
         gen_at(&mut a, &self.publicseed);
         Polymat { vec: a }
