@@ -330,8 +330,8 @@ impl Sub for Poly {
     type Output = Self;
 
     fn sub(self, rhs: Self) -> Self::Output {
-        let mut r = self.clone();
-        poly_sub(&mut r, &rhs);
+        let mut r = rhs.clone();
+        poly_sub(&mut r, &self);
         r
     }
 }
