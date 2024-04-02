@@ -22,6 +22,21 @@ impl Poly {
     pub fn new() -> Self {
         Self::default()
     }
+
+    pub fn reduce(self: &mut Self) -> &mut Self {
+        poly_reduce(self);
+        self
+    }
+
+    pub fn ntt(self: &mut Self) -> &mut Self {
+        poly_ntt(self);
+        self
+    }
+
+    pub fn invntt(self: &mut Self) -> &mut Self {
+        poly_invntt_tomont(self);
+        self
+    }
 }
 
 /// Name:  poly_compress

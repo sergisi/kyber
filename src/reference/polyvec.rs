@@ -16,6 +16,21 @@ impl Polyvec {
             vec: [Poly::new(); KYBER_K],
         }
     }
+
+    pub fn reduce(self: &mut Self) -> &mut Self {
+        polyvec_reduce(self);
+        self
+    }
+
+    pub fn ntt(self: &mut Self) -> &mut Self {
+        polyvec_ntt(self);
+        self
+    }
+
+    pub fn invntt(self: &mut Self) -> &mut Self {
+        polyvec_invntt_tomont(self);
+        self
+    }
 }
 
 /// Name:  polyvec_compress

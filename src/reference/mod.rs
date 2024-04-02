@@ -6,4 +6,5 @@ pub mod ntt;
 pub mod poly;
 pub mod polyvec;
 pub mod reduce;
+pub mod state;
 pub mod verify;
