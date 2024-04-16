@@ -4,7 +4,7 @@ use rand_core::{CryptoRng, RngCore};
 
 use crate::{
     indcpa::{gen_a, gen_at},
-    poly::{poly_getnoise_eta1, Poly},
+    poly::{poly_getnoise_eta1, Poly, poly_getnoise_eta2},
     polyvec::{Polymat, Polyvec},
     rng::randombytes,
     symmetric::hash_g,
@@ -38,8 +38,18 @@ impl GenState {
 
     pub fn gen_small_poly(self: &mut Self) -> Poly {
         let mut s = Poly::new();
-        poly_getnoise_eta1(&mut s, &self.noiseseed, self.nonce);
+        poly_getnoise_eta2(&mut s, &self.noiseseed, self.nonce);
         self.nonce += 1;
+        s.ntt();
+        return s;
+    }
+
+    pub fn gen_s_key(self: &mut Self) -> Polyvec {
+        let mut s = Polyvec::new();
+        for i in 0..KYBER_K {
+            poly_getnoise_eta1(&mut s.vec[i], &self.noiseseed, self.nonce);
+            self.nonce += 1;
+        }
         s.ntt();
         return s;
     }
