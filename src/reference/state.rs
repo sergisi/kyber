@@ -40,7 +40,6 @@ impl GenState {
         let mut s = Poly::new();
         poly_getnoise_eta2(&mut s, &self.noiseseed, self.nonce);
         self.nonce += 1;
-        s.ntt();
         return s;
     }
 
@@ -50,7 +49,6 @@ impl GenState {
             poly_getnoise_eta1(&mut s.vec[i], &self.noiseseed, self.nonce);
             self.nonce += 1;
         }
-        s.ntt();
         return s;
     }
 
@@ -60,7 +58,6 @@ impl GenState {
             poly_getnoise_eta2(&mut s.vec[i], &self.noiseseed, self.nonce);
             self.nonce += 1;
         }
-        s.ntt();
         return s;
     }
 
